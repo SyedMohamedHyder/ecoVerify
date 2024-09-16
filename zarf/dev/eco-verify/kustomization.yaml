@@ -4,6 +4,7 @@ resources:
 - ../../base/eco-verify/
 patches:
 - path: ./dev-eco-verify-patch-deploy.yaml
+- path: ./dev-eco-verify-patch-service.yaml
 images:
 - name: service-image
   newName: syedhyder1362k/service/eco-verify-api
