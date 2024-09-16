@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/SyedMohamedHyder/ecoVerify/app/services/eco-verify-api/v1/handlers"
 	v1 "github.com/SyedMohamedHyder/ecoVerify/business/web/v1"
 	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/debug"
 	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
@@ -121,7 +122,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 		Log:      log,
 	}
 
-	apiMux := v1.APIMux(cfgMux)
+	apiMux := v1.APIMux(cfgMux, handlers.Routes{})
 
 	api := http.Server{
 		Addr:         cfg.Web.APIHost,
