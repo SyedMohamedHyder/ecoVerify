@@ -2,12 +2,16 @@ package main
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"os"
 	"os/signal"
 	"runtime"
 	"syscall"
+	"time"
 
 	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
+	"github.com/ardanlabs/conf/v3"
 )
 
 var build = "develop"
@@ -43,6 +47,36 @@ func run(ctx context.Context, log *logger.Logger) error {
 	// GOMAXPROCS
 
 	log.Info(ctx, "startup", "GOMAXPROCS", runtime.GOMAXPROCS(0), "build", build)
+
+	// -------------------------------------------------------------------------
+	// Configuration
+
+	cfg := struct {
+		conf.Version
+		Web struct {
+			ReadTimeout     time.Duration `conf:"default:5s"`
+			WriteTimeout    time.Duration `conf:"default:10s"`
+			IdleTimeout     time.Duration `conf:"default:120s"`
+			ShutdownTimeout time.Duration `conf:"default:20s"`
+			APIHost         string        `conf:"default:0.0.0.0:3000"`
+			DebugHost       string        `conf:"default:0.0.0.0:4000"`
+		}
+	}{
+		Version: conf.Version{
+			Build: build,
+			Desc:  "EcoVerify CAPTCHA API",
+		},
+	}
+
+	const prefix = "EcoVerify"
+	help, err := conf.Parse(prefix, &cfg)
+	if err != nil {
+		if errors.Is(err, conf.ErrHelpWanted) {
+			fmt.Println(help)
+			return nil
+		}
+		return fmt.Errorf("parsing config: %w", err)
+	}
 
 	// -------------------------------------------------------------------------
 
