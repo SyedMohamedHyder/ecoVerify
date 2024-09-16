@@ -25,7 +25,7 @@ func main() {
 		return ""
 	}
 
-	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "EcoVerify", traceIDFunc, events)
+	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "EcoVerify-API", traceIDFunc, events)
 
 	// -------------------------------------------------------------------------
 
