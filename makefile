@@ -8,6 +8,12 @@ run:
 run-help:
 	go run app/services/eco-verify-api/main.go --help | go run app/tooling/logfmt/main.go
 
+curl:
+	curl -il http://localhost:3000/hack
+
+load:
+	hey -m GET -c 100 -n 100000 "http://localhost:3000/hack"
+
 # ==============================================================================
 # Define dependencies
 
