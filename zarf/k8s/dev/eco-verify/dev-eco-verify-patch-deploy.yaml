@@ -5,19 +5,12 @@ metadata:
   namespace: eco-verify
 
 spec:
-  selector:
-    matchLabels:
-      app: eco-verify
-
   replicas: 1
 
   strategy:
     type: Recreate
 
   template:
-    metadata:
-      labels:
-        app: eco-verify
 
     spec:
       dnsPolicy: ClusterFirstWithHostNet

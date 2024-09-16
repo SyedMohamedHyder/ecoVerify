@@ -47,3 +47,7 @@ kind: Service
 metadata:
   name: eco-verify-api
   namespace: eco-verify
+
+spec:
+  selector:
+    app: eco-verify
