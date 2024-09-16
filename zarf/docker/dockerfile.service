@@ -25,6 +25,7 @@ ARG BUILD_DATE
 ARG BUILD_REF
 RUN addgroup -g 1000 -S eco-verify && \
     adduser -u 1000 -h /service -G eco-verify -S eco-verify
+COPY --from=build_sales-api --chown=sales:sales /service/zarf/keys/. /service/zarf/keys/.
 COPY --from=eco-verify-api --chown=eco-verify:eco-verify /service/app/services/eco-verify/eco-verify-api /service/eco-verify-api
 WORKDIR /service
 USER eco-verify
