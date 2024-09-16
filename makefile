@@ -3,7 +3,7 @@ SHELL_PATH = /bin/ash
 SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 
 run:
-	go run app/services/eco-verify/main.go | go run app/tooling/logfmt/main.go
+	go run app/services/eco-verify-api/main.go | go run app/tooling/logfmt/main.go
 
 # ==============================================================================
 # Define dependencies
@@ -19,11 +19,11 @@ TEMPO           := grafana/tempo:2.2.0
 LOKI            := grafana/loki:2.9.0
 PROMTAIL        := grafana/promtail:2.9.0
 
-KIND_CLUSTER    := eco-verify
+KIND_CLUSTER    := eco-verify-cluster
 NAMESPACE       := eco-verify
 APP             := eco-verify
 BASE_IMAGE_NAME := syedhyder1362k/service
-SERVICE_NAME    := eco-verify
+SERVICE_NAME    := eco-verify-api
 VERSION         := 0.0.1
 SERVICE_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME):$(VERSION)
 METRICS_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME)-metrics:$(VERSION)
@@ -56,6 +56,27 @@ dev-up:
 
 dev-down:
 	kind delete cluster --name $(KIND_CLUSTER)
+
+# ------------------------------------------------------------------------------
+
+dev-load:
+	cd zarf/k8s/dev/eco-verify; kustomize edit set image service-image=$(SERVICE_IMAGE)
+	kind load docker-image $(SERVICE_IMAGE) --name $(KIND_CLUSTER)
+
+dev-apply:
+	kustomize build zarf/k8s/dev/eco-verify | kubectl apply -f -
+	kubectl wait pods --namespace=$(NAMESPACE) --selector app=$(APP) --timeout=120s --for=condition=Ready
+
+# ------------------------------------------------------------------------------
+
+dev-logs:
+	kubectl logs --namespace=$(NAMESPACE) -l app=$(APP) --all-containers=true -f --tail=100 --max-log-requests=6 | go run app/tooling/logfmt/main.go -service=$(SERVICE_NAME)
+
+dev-describe-deployment:
+	kubectl describe deployment --namespace=$(NAMESPACE) $(APP)
+
+dev-describe-eco-verify:
+	kubectl describe pod --namespace=$(NAMESPACE) -l app=$(APP)
 
 # ------------------------------------------------------------------------------
 
