@@ -16,6 +16,7 @@ import (
 	v1 "github.com/SyedMohamedHyder/ecoVerify/business/web/v1"
 	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/debug"
 	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
 	"github.com/ardanlabs/conf/v3"
 )
 
@@ -31,7 +32,7 @@ func main() {
 	}
 
 	traceIDFunc := func(ctx context.Context) string {
-		return ""
+		return web.GetTraceID(ctx)
 	}
 
 	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "EcoVerify-API", traceIDFunc, events)
