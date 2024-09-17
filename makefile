@@ -89,8 +89,12 @@ dev-down:
 
 dev-load:
 	kind load docker-image $(SERVICE_IMAGE) --name $(KIND_CLUSTER)
+	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
 
 dev-apply:
+	kustomize build zarf/k8s/dev/database | kubectl apply -f -
+	kubectl rollout status --namespace=$(NAMESPACE) --watch --timeout=120s sts/database
+
 	kustomize build zarf/k8s/dev/ecoverify | kubectl apply -f -
 	kubectl wait pods --namespace=$(NAMESPACE) --selector app=$(APP) --timeout=120s --for=condition=Ready
 
@@ -111,6 +115,12 @@ dev-describe-deployment:
 
 dev-describe-ecoverify:
 	kubectl describe pod --namespace=$(NAMESPACE) -l app=$(APP)
+
+dev-logs-db:
+	kubectl logs --namespace=$(NAMESPACE) -l app=database --all-containers=true -f --tail=100
+
+pgcli:
+	pgcli postgresql://postgres:postgres@localhost
 
 # ------------------------------------------------------------------------------
 

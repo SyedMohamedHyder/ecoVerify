@@ -2,8 +2,11 @@ package image
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/google/uuid"
 )
 
 // Storer interface declares the behavior this package needs to persists and
@@ -30,6 +33,19 @@ func NewCore(log *logger.Logger, storer Storer) *Core {
 
 // Create adds a new user to the system.
 func (c *Core) Create(ctx context.Context, ni NewImage) (Image, error) {
+	now := time.Now()
 
-	return Image{}, nil
+	img := Image{
+		ID:          uuid.New(),
+		URL:         ni.URL,
+		Type:        ni.Type,
+		DateCreated: now,
+		DateUpdated: now,
+	}
+
+	if err := c.storer.Create(ctx, img); err != nil {
+		return Image{}, fmt.Errorf("create: %w", err)
+	}
+
+	return img, nil
 }
