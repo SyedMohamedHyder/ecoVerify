@@ -1,5 +1,5 @@
 # Build the Go Binary.
-FROM golang:1.21.3 as ecoverify-api
+FROM golang:1.21.3 as build_ecoverify-api
 ENV CGO_ENABLED 0
 ARG BUILD_REF
 
@@ -14,6 +14,10 @@ ARG BUILD_REF
 # Copy the source code into the container.
 COPY . /service
 
+# Build the admin binary.
+WORKDIR /service/app/tooling/ecoverify-admin
+RUN go build -ldflags "-X main.build=${BUILD_REF}"
+
 # Build the service binary.
 WORKDIR /service/app/services/ecoverify-api
 RUN go build -ldflags "-X main.build=${BUILD_REF}"
@@ -25,8 +29,9 @@ ARG BUILD_DATE
 ARG BUILD_REF
 RUN addgroup -g 1000 -S ecoverify && \
     adduser -u 1000 -h /service -G ecoverify -S ecoverify
-COPY --from=ecoverify-api --chown=ecoverify:ecoverify /service/zarf/keys/. /service/zarf/keys/.
-COPY --from=ecoverify-api --chown=ecoverify:ecoverify /service/app/services/ecoverify-api/ecoverify-api /service/ecoverify-api
+COPY --from=build_ecoverify-api --chown=ecoverify:ecoverify /service/zarf/keys/. /service/zarf/keys/.
+COPY --from=build_ecoverify-api --chown=sales:sales /service/app/tooling/ecoverify-admin/ecoverify-admin /service/ecoverify-admin
+COPY --from=build_ecoverify-api --chown=ecoverify:ecoverify /service/app/services/ecoverify-api/ecoverify-api /service/ecoverify-api
 WORKDIR /service
 USER ecoverify
 CMD ["./ecoverify-api"]
