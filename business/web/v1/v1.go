@@ -7,6 +7,7 @@ import (
 	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/mid"
 	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
 	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
+	"github.com/jmoiron/sqlx"
 )
 
 // APIMuxConfig contains all the mandatory systems required by handlers.
@@ -15,6 +16,7 @@ type APIMuxConfig struct {
 	Shutdown chan os.Signal
 	Log      *logger.Logger
 	Auth     *auth.Auth
+	DB       *sqlx.DB
 }
 
 // RouteAdder defines behavior that sets the routes to bind for an instance
