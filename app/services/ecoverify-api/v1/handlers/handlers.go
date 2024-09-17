@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/SyedMohamedHyder/ecoVerify/app/services/eco-verify-api/v1/handlers/hackgrp"
-	v1 "github.com/SyedMohamedHyder/ecoVerify/business/web/v1"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/app/services/ecoverify-api/v1/handlers/hackgrp"
+	v1 "github.com/SyedMohamedHyder/ecoverify/business/web/v1"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 type Routes struct{}

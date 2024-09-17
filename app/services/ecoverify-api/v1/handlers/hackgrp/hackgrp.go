@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 func Hack(ctx context.Context, w http.ResponseWriter, r *http.Request) error {

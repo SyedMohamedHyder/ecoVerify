@@ -3,9 +3,9 @@ package hackgrp
 import (
 	"net/http"
 
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/auth"
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/mid"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/auth"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/mid"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 // Config contains all the mandatory systems required by handlers.

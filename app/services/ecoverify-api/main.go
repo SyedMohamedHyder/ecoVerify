@@ -12,13 +12,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/SyedMohamedHyder/ecoVerify/app/services/eco-verify-api/v1/handlers"
-	v1 "github.com/SyedMohamedHyder/ecoVerify/business/web/v1"
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/auth"
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/debug"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/keystore"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/app/services/ecoverify-api/v1/handlers"
+	v1 "github.com/SyedMohamedHyder/ecoverify/business/web/v1"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/auth"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/debug"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/keystore"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 	"github.com/ardanlabs/conf/v3"
 )
 
