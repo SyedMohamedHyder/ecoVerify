@@ -7,6 +7,7 @@ import (
 	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/auth"
 	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/response"
 	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/validate"
 	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
@@ -25,6 +26,17 @@ func Errors(log *logger.Logger) web.Middleware {
 				switch {
 				case response.IsError(err):
 					reqErr := response.GetError(err)
+
+					if validate.IsFieldErrors(reqErr.Err) {
+						fieldErrors := validate.GetFieldErrors(reqErr.Err)
+						er = response.ErrorDocument{
+							Error:  "data validation error",
+							Fields: fieldErrors.Fields(),
+						}
+						status = reqErr.Status
+						break
+					}
+
 					er = response.ErrorDocument{
 						Error: reqErr.Error(),
 					}
