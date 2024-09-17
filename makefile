@@ -10,22 +10,22 @@ SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 # 	$ openssl rsa -pubout -in private.pem -out public.pem
 
 run:
-	go run app/services/eco-verify-api/main.go | go run app/tooling/logfmt/main.go
+	go run app/services/ecoverify-api/main.go | go run app/tooling/logfmt/main.go
 
 run-help:
-	go run app/services/eco-verify-api/main.go --help | go run app/tooling/logfmt/main.go
+	go run app/services/ecoverify-api/main.go --help | go run app/tooling/logfmt/main.go
 
 curl:
 	curl -il http://localhost:3000/hack
 
 curl-auth:
-	curl -il -H "Authorization: Bearer ${TOKEN}" http://localhost:3000/hackk
+	curl -il -H "Authorization: Bearer ${TOKEN}" http://localhost:3000/hackauth
 
 load:
 	hey -m GET -c 100 -n 100000 "http://localhost:3000/hack"
 
 admin:
-	go run app/tooling/eco-verify-admin/main.go
+	go run app/tooling/ecoverify-admin/main.go
 
 # ==============================================================================
 # Define dependencies
@@ -41,11 +41,11 @@ TEMPO           := grafana/tempo:2.2.0
 LOKI            := grafana/loki:2.9.0
 PROMTAIL        := grafana/promtail:2.9.0
 
-KIND_CLUSTER    := eco-verify-cluster
-NAMESPACE       := eco-verify
-APP             := eco-verify
+KIND_CLUSTER    := ecoverify-cluster
+NAMESPACE       := ecoverify
+APP             := ecoverify
 BASE_IMAGE_NAME := syedhyder1362k/service
-SERVICE_NAME    := eco-verify-api
+SERVICE_NAME    := ecoverify-api
 VERSION         := 0.0.1
 SERVICE_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME):$(VERSION)
 METRICS_IMAGE   := $(BASE_IMAGE_NAME)/$(SERVICE_NAME)-metrics:$(VERSION)
@@ -85,7 +85,7 @@ dev-load:
 	kind load docker-image $(SERVICE_IMAGE) --name $(KIND_CLUSTER)
 
 dev-apply:
-	kustomize build zarf/k8s/dev/eco-verify | kubectl apply -f -
+	kustomize build zarf/k8s/dev/ecoverify | kubectl apply -f -
 	kubectl wait pods --namespace=$(NAMESPACE) --selector app=$(APP) --timeout=120s --for=condition=Ready
 
 dev-restart:
@@ -103,7 +103,7 @@ dev-logs:
 dev-describe-deployment:
 	kubectl describe deployment --namespace=$(NAMESPACE) $(APP)
 
-dev-describe-eco-verify:
+dev-describe-ecoverify:
 	kubectl describe pod --namespace=$(NAMESPACE) -l app=$(APP)
 
 # ------------------------------------------------------------------------------

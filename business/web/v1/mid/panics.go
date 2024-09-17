@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"runtime/debug"
 
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/metrics"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/metrics"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 // Panics recovers from panics and converts the panic to an error so it is

@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/metrics"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/metrics"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 // Metrics updates program counters.

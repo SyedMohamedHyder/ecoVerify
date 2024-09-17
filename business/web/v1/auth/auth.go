@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 	"github.com/open-policy-agent/opa/rego"

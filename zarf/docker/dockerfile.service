@@ -1,5 +1,5 @@
 # Build the Go Binary.
-FROM golang:1.21.3 as eco-verify-api
+FROM golang:1.21.3 as ecoverify-api
 ENV CGO_ENABLED 0
 ARG BUILD_REF
 
@@ -15,7 +15,7 @@ ARG BUILD_REF
 COPY . /service
 
 # Build the service binary.
-WORKDIR /service/app/services/eco-verify-api
+WORKDIR /service/app/services/ecoverify-api
 RUN go build -ldflags "-X main.build=${BUILD_REF}"
 
 
@@ -23,17 +23,17 @@ RUN go build -ldflags "-X main.build=${BUILD_REF}"
 FROM alpine:3.18
 ARG BUILD_DATE
 ARG BUILD_REF
-RUN addgroup -g 1000 -S eco-verify && \
-    adduser -u 1000 -h /service -G eco-verify -S eco-verify
-COPY --from=build_sales-api --chown=sales:sales /service/zarf/keys/. /service/zarf/keys/.
-COPY --from=eco-verify-api --chown=eco-verify:eco-verify /service/app/services/eco-verify/eco-verify-api /service/eco-verify-api
+RUN addgroup -g 1000 -S ecoverify && \
+    adduser -u 1000 -h /service -G ecoverify -S ecoverify
+COPY --from=ecoverify-api --chown=ecoverify:ecoverify /service/zarf/keys/. /service/zarf/keys/.
+COPY --from=ecoverify-api --chown=ecoverify:ecoverify /service/app/services/ecoverify-api/ecoverify-api /service/ecoverify-api
 WORKDIR /service
-USER eco-verify
-CMD ["./eco-verify-api"]
+USER ecoverify
+CMD ["./ecoverify-api"]
 
 LABEL org.opencontainers.image.created="${BUILD_DATE}" \
-    org.opencontainers.image.title="eco-verify" \
+    org.opencontainers.image.title="ecoverify" \
     org.opencontainers.image.authors="K Syed Mohamed Hyder<syedhyderceg@gmail.com>" \
-    org.opencontainers.image.source="https://github.com/SyedMohamedHyder/ecoVerify/tree/main/app/services/eco-verify" \
+    org.opencontainers.image.source="https://github.com/SyedMohamedHyder/ecoverify/tree/main/app/services/ecoverify" \
     org.opencontainers.image.revision="${BUILD_REF}" \
     org.opencontainers.image.vendor="K Syed Mohamed Hyder"

@@ -1,4 +1,4 @@
-module github.com/SyedMohamedHyder/ecoVerify
+module github.com/SyedMohamedHyder/ecoverify
 
 go 1.21.3
 

@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eco-verify
-  namespace: eco-verify
+  name: ecoverify
+  namespace: ecoverify
 
 spec:
   replicas: 1
@@ -82,7 +82,7 @@ spec:
 # colocated PODs.
 
       containers:
-      - name: eco-verify-api
+      - name: ecoverify-api
         resources:
           requests:
             cpu: "500m" # I need access to 1/2 core on the node.

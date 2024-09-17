@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 func Logger(log *logger.Logger) web.Middleware {

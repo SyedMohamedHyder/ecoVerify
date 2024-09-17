@@ -5,9 +5,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/auth"
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/response"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/auth"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/response"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 	"github.com/google/uuid"
 )
 

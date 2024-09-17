@@ -4,10 +4,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/auth"
-	"github.com/SyedMohamedHyder/ecoVerify/business/web/v1/response"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/logger"
-	"github.com/SyedMohamedHyder/ecoVerify/foundation/web"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/auth"
+	"github.com/SyedMohamedHyder/ecoverify/business/web/v1/response"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/SyedMohamedHyder/ecoverify/foundation/web"
 )
 
 // Errors handles errors coming out of the call chain. It detects normal
