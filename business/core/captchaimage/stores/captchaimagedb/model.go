@@ -1,4 +1,4 @@
-package imagedb
+package captchaimagedb
 
 import (
 	"fmt"
@@ -46,7 +46,7 @@ func toCoreCaptchaImage(dbImg dbCaptchaImage) (captchaimage.CaptchaImage, error)
 	return img, nil
 }
 
-func toCoreUserSlice(dbImgs []dbCaptchaImage) ([]captchaimage.CaptchaImage, error) {
+func toCoreCaptchaImageSlice(dbImgs []dbCaptchaImage) ([]captchaimage.CaptchaImage, error) {
 	imgs := make([]captchaimage.CaptchaImage, len(dbImgs))
 
 	for i, dbImg := range dbImgs {

@@ -30,7 +30,7 @@ ARG BUILD_REF
 RUN addgroup -g 1000 -S ecoverify && \
     adduser -u 1000 -h /service -G ecoverify -S ecoverify
 COPY --from=build_ecoverify-api --chown=ecoverify:ecoverify /service/zarf/keys/. /service/zarf/keys/.
-COPY --from=build_ecoverify-api --chown=sales:sales /service/app/tooling/ecoverify-admin/ecoverify-admin /service/ecoverify-admin
+COPY --from=build_ecoverify-api --chown=ecoverify:ecoverify /service/app/tooling/ecoverify-admin/ecoverify-admin /service/ecoverify-admin
 COPY --from=build_ecoverify-api --chown=ecoverify:ecoverify /service/app/services/ecoverify-api/ecoverify-api /service/ecoverify-api
 WORKDIR /service
 USER ecoverify

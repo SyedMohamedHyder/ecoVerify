@@ -1,4 +1,4 @@
-package imagedb
+package captchaimagedb
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// Store manages the set of APIs for user database access.
+// Store manages the set of APIs for captcha image database access.
 type Store struct {
 	log *logger.Logger
 	db  *sqlx.DB
@@ -28,7 +28,7 @@ func NewStore(log *logger.Logger, db *sqlx.DB) *Store {
 // Create inserts a new captcha image into the database.
 func (s *Store) Create(ctx context.Context, img captchaimage.CaptchaImage) error {
 	const q = `
-	INSERT INTO captcha_image
+	INSERT INTO captcha_images
 		(image_id, url, image_category, date_created, date_updated)
 	VALUES
 		(:image_id, :url, :image_category, :date_created, :date_updated)`

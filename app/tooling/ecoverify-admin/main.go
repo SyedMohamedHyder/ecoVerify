@@ -41,7 +41,7 @@ func migrateSeed() error {
 		DB struct {
 			User         string `conf:"default:postgres"`
 			Password     string `conf:"default:postgres,mask"`
-			Host         string `conf:"default:database-service.sales-system.svc.cluster.local"`
+			Host         string `conf:"default:database-service.ecoverify.svc.cluster.local"`
 			Name         string `conf:"default:postgres"`
 			MaxIdleConns int    `conf:"default:2"`
 			MaxOpenConns int    `conf:"default:0"`
@@ -49,7 +49,7 @@ func migrateSeed() error {
 		}
 	}
 
-	const prefix = "SALES"
+	const prefix = "EcoVerify"
 	help, err := conf.Parse(prefix, &cfg)
 	if err != nil {
 		if errors.Is(err, conf.ErrHelpWanted) {

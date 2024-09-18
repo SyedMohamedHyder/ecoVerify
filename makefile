@@ -21,6 +21,9 @@ curl:
 curl-auth:
 	curl -il -H "Authorization: Bearer ${TOKEN}" http://localhost:3000/v1/hackauth
 
+curl-create:
+	curl -il -X POST -H 'Content-Type: application/json' -d '{"url":"https://ecocaptcha.jpg","category":"ECOFRIENDLY"}' http://localhost:3000/v1/captchaimages
+
 load:
 	hey -m GET -c 100 -n 100000 "http://localhost:3000/v1/hack"
 
