@@ -8,6 +8,7 @@ import (
 	"github.com/SyedMohamedHyder/ecoverify/business/core/captchaimage"
 	db "github.com/SyedMohamedHyder/ecoverify/business/data/dbsql/pgx"
 	"github.com/SyedMohamedHyder/ecoverify/foundation/logger"
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -41,4 +42,68 @@ func (s *Store) Create(ctx context.Context, img captchaimage.CaptchaImage) error
 	}
 
 	return nil
+}
+
+// QueryByID gets the specified captcha image from the database.
+func (s *Store) QueryByID(ctx context.Context, imgID uuid.UUID) (captchaimage.CaptchaImage, error) {
+	data := struct {
+		ID string `db:"image_id"`
+	}{
+		ID: imgID.String(),
+	}
+
+	const q = `
+	SELECT
+        image_id, url, image_category, date_created, date_updated
+	FROM
+		captcha_images
+	WHERE 
+		image_id = :image_id`
+
+	var dbImg dbCaptchaImage
+	if err := db.NamedQueryStruct(ctx, s.log, s.db, q, data, &dbImg); err != nil {
+		if errors.Is(err, db.ErrDBNotFound) {
+			return captchaimage.CaptchaImage{}, fmt.Errorf("namedquerystruct: %w", captchaimage.ErrNotFound)
+		}
+		return captchaimage.CaptchaImage{}, fmt.Errorf("namedquerystruct: %w", err)
+	}
+
+	img, err := toCoreCaptchaImage(dbImg)
+	if err != nil {
+		return captchaimage.CaptchaImage{}, err
+	}
+
+	return img, nil
+}
+
+// QueryByURL gets the specified captcha image from the database by URL.
+func (s *Store) QueryByURL(ctx context.Context, url string) (captchaimage.CaptchaImage, error) {
+	data := struct {
+		URL string `db:"url"`
+	}{
+		URL: url,
+	}
+
+	const q = `
+	SELECT
+        image_id, url, image_category, date_created, date_updated
+	FROM
+		captcha_images
+	WHERE
+		url = :url`
+
+	var dbImg dbCaptchaImage
+	if err := db.NamedQueryStruct(ctx, s.log, s.db, q, data, &dbImg); err != nil {
+		if errors.Is(err, db.ErrDBNotFound) {
+			return captchaimage.CaptchaImage{}, fmt.Errorf("namedquerystruct: %w", captchaimage.ErrNotFound)
+		}
+		return captchaimage.CaptchaImage{}, fmt.Errorf("namedquerystruct: %w", err)
+	}
+
+	img, err := toCoreCaptchaImage(dbImg)
+	if err != nil {
+		return captchaimage.CaptchaImage{}, err
+	}
+
+	return img, nil
 }

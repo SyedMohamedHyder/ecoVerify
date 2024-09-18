@@ -21,6 +21,8 @@ var (
 // retrieve data.
 type Storer interface {
 	Create(ctx context.Context, img CaptchaImage) error
+	QueryByID(ctx context.Context, imgID uuid.UUID) (CaptchaImage, error)
+	QueryByURL(ctx context.Context, url string) (CaptchaImage, error)
 }
 
 // =============================================================================
@@ -53,6 +55,26 @@ func (c *Core) Create(ctx context.Context, ni NewCaptchaImage) (CaptchaImage, er
 
 	if err := c.storer.Create(ctx, img); err != nil {
 		return CaptchaImage{}, fmt.Errorf("create: %w", err)
+	}
+
+	return img, nil
+}
+
+// QueryByID finds the captcha image by the specified ID.
+func (c *Core) QueryByID(ctx context.Context, imgID uuid.UUID) (CaptchaImage, error) {
+	img, err := c.storer.QueryByID(ctx, imgID)
+	if err != nil {
+		return CaptchaImage{}, fmt.Errorf("query: captchaimageID[%s]: %w", imgID, err)
+	}
+
+	return img, nil
+}
+
+// QueryByURL finds the captcha image by a specified URL.
+func (c *Core) QueryByURL(ctx context.Context, url string) (CaptchaImage, error) {
+	img, err := c.storer.QueryByURL(ctx, url)
+	if err != nil {
+		return CaptchaImage{}, fmt.Errorf("query: captchaimageURL[%s]: %w", url, err)
 	}
 
 	return img, nil
